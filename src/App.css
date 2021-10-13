@@ -36,3 +36,12 @@
     transform: rotate(360deg);
   }
 }
+
+.footer{
+  background-color: black;
+  height: 15vh;
+}
+
+.navBar{
+  background-color: black;
+}
