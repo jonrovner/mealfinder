@@ -10,10 +10,14 @@ const Dish = ({dish, getDetail}) => {
         }
     }
     return (
-        <div className="col-sm-4 col-md-3 bg-dark">
+        <div className="col-sm-12 col-md-6 bg-dark">
             <div className="card max-height-190 mx-1 my-2" onClick={()=>getDetail(dish.id)}>  
+                
+
                 <img className="card-image-top image-fluid" src={dish.image} alt={dish.title}/>
-                <div className="card-body" style={styles.cardBody}>
+                
+                
+                <div className="card-body bg-dark" style={styles.cardBody}>
                     <p className="card-title text-center small my-auto">{dish.title}</p>
                </div>
             </div>

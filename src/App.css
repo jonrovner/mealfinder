@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  position: relative;
 }
 
 .App-logo {
@@ -44,4 +45,51 @@
 
 .navBar{
   background-color: black;
+}
+
+.loader{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.75);
+  position: absolute;
+  z-index: 10;
+  
+}
+
+.moreButton{
+  width: 150px;
+  margin: auto;
+
+}
+
+.pantryList{
+
+  background-color: white;
+}
+
+.red {
+  background-color: red;
+}
+
+.green {
+  background-color: green;
+}
+.closeButton {
+    position: absolute;
+    
+    left: 80%;
+    font-size: 11px;
+    font-family: helvetica;
+    color: tray;
+    display: none;
+
+}
+.favItem{
+  position: relative
+}
+.favItem:hover .closeButton {
+  display: block;
 }

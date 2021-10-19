@@ -1,97 +1,142 @@
 import './App.css';
-import NavBar from './components/NavBar';
 import React, { useState } from 'react'
-import Search from './components/Search';
-import Details  from "./components/Details";
-import Dish from './components/Dish';
-import Footer from './components/Footer';
-import LoadingSpinner from './components/LoadingSpinner'
+import {Details, Dish, Favs, Footer, LoadingSpinner, NavBar, PantryList, Search} from './components/index'
+import axios from 'axios'
+import Button from 'react-bootstrap/Button'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 const App = () => { 
-  const [query, setQuery] = useState({})
+  function useStickyState(defaultValue, key) {
+    const [value, setValue] = React.useState(() => {
+      const stickyValue = window.localStorage.getItem(key);
+      return stickyValue !== null
+        ? JSON.parse(stickyValue)
+        : defaultValue;
+    });
+    React.useEffect(() => {
+      window.localStorage.setItem(key, JSON.stringify(value));
+    }, [key, value]);
+    return [value, setValue];
+  }
+
+  const [word, setWord] = useState("")
+  const [diet, setDiet] = useState("diet")
+  const [cuisine, setCuisine] = useState("cuisine")
+  const [dishType, setDishType] = useState("dishType")
+  const [offset, setOffset] = useState(0)
+  const [pantryList, setPantryList] = useStickyState([], "pantryList")
+  const [favs, setFavs] = useStickyState([], "favs")
   const [dishes, setDishes] = useState([])
   const [details, setDetails] = useState({})
   const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false)
+  
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [loading, setLoading] = useState(false)
 
-  const search = async ({ word, diet, cuisine, dishType, offset} ) => {
-    setQuery({word, diet, cuisine, dishType, offset})
-    setLoading(true)
+  const search = async ({word, diet, cuisine, dishType, offset}) => {
+    
+    setWord(word)
+    setDiet(diet)
+    setCuisine(cuisine)
+    setDishType(dishType)
+    setOffset(offset)    
+    setLoading(true)    
     var str = ""
     str = diet !== "diet" ? str + "&diet=" + diet : str
     str = cuisine !== "cuisine" ? str + "&cuisine=" + cuisine : str
     str = dishType !== "dishType" ? str + "&type=" + dishType : str
-    str = str + "&offset=" + offset
-    console.log(str)    
-    const queryString = `http://localhost:3001/api/search?word=${word + str}`
-    const data = await fetch(queryString)
-    const result = await data.json()
-    console.log(result.results)
-    setDishes(dishes.concat(result.results))
+    str = str + "&offset=" + offset    
+    const queryString = `http://localhost:3001/api/dishes/search?word=${word + str}`
+    console.log(queryString)    
+    axios.get(queryString).then(response => {
+      console.log(response.data)
+      setDishes(response.data.results)
+    })
+    const newOffset = offset + 10
+    setOffset(newOffset)
     setLoading(false)       
   }
 
- const getMore = async () => {
-  const newOffset = query.offset+10
-  setQuery({...query,
-    offset: newOffset
-  })
-  await search(query)  
-
+  const getMore = async () => {   
+    await search({word, diet, cuisine, dishType, offset})  
   }
 
-  const getDetail = async (id) => {
-    console.log(id)
-    const queryString = `http://localhost:3001/api/${id}`
-      const data = await fetch(queryString)
-      const result = await data.json()
-      console.log(result)
-      setDetails(result)
+  const getDetail = async (id) => {    
+    setLoading(true)
+    const queryString = `http://localhost:3001/api/dishes/${id}`
+    axios.get(queryString).then(response => {
+      setLoading(false)
+      setDetails(response.data)
       handleShow()
+    })
   }
 
   const handleFormChange = () => {
     setDishes([])
-    //search(query)
   }
 
+  const addToPantry = (name) => {
+    setPantryList(pantryList.concat(...name))
+  }
+  const removeFromPantry = (name) => {
+   setPantryList(pantryList.filter(e => e!==name))
+  }
 
+  const addToFavs = (id) => {
+    setFavs(favs.concat(id))
+  }
+  const handleDetails = (detailObject) => {
+    setDetails(detailObject)
+    handleShow()
+  }
+
+  const removeFromFavs = item => {
+    setFavs(favs.filter(fav => fav.title !== item.title))
+  }
 
   return (
-      <div className="bg-dark">
+      <div className="bg-dark ">
         <NavBar />
+        <LoadingSpinner visibility={loading}/>
         <Search handleSearch = {search} formChange={handleFormChange}/>
-        <div className="container-fluid px-3 bg-dark pb-3">
-          <div className="row">
-          {
-            
-            dishes.length === 0 
-            ? <div style={{color: "white"}}>no dishes to show</div>
-            : dishes.map(dish => <Dish key={dish.id} dish={dish} getDetail={getDetail} />)
+        <div className="container p-3 d-flex flex-column justify-content-center align-items-center">
+          <div className="row text-white p-2 border border-white">
+            <PantryList 
+              list={pantryList} 
+              addToLIst={addToPantry} 
+              removeFromList={removeFromPantry}/>
+            <div className="col-6 container ">
+            {            
+              dishes.length === 0 
+              ? <div className="d-flex flex-column justify-content-center align-items-center" 
+                      style={{color: "white", height: "30rem"}}>
+                          <p>Search dishes by name or ingredient</p>
+                </div>
+              : <div className="row py-2">{dishes.map(dish => <Dish key={dish.id} dish={dish} getDetail={getDetail} />)}</div>
+            }
 
-          }
-          <LoadingSpinner visibility={loading}
-          />
-          <button onClick={getMore}>Get More</button>
-          
+            </div>
+            <Favs favList={favs} handleDetails={handleDetails} remove={removeFromFavs} />
           <Details 
-              details={details}
-              show={show}
-              close={handleClose}
-            />
+          details={details}
+          show={show}
+          close={handleClose}
+          addToFavs={addToFavs}
+          addToPantry={addToPantry}
+          favList={favs}
           
-          </div>
+          
+        />
+        </div>
         </div>
         
-        <Details 
-              details={details}
-              show={show}
-              close={handleClose}
-            />
+        <div className="container-fluid text-center pb-10 mb-5">
+          <Button variant="secondary" onClick={getMore} size="lg">Get More</Button>
+
+        </div>
+
         <Footer />
       </div>
     );

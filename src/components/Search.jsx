@@ -1,14 +1,15 @@
 import  React, {useState} from 'react';
 
+
 const Search = ({handleSearch, formChange}) => {
-   
-   const [query, setQuery] = useState({
-       word: "",
-       diet: "diet",
-       cuisine: "cuisine",
-       dishType: "dishType",
-       offset: 0
-   })
+    const [query, setQuery] = useState({
+        word: "",
+        diet: "diet",
+        cuisine: "cuisine",
+        dishType: "dishType",
+        offset: 0
+    })
+       
     
     const handleChange = (event) => {
         event.preventDefault()
@@ -30,9 +31,7 @@ const Search = ({handleSearch, formChange}) => {
                 break;
             }        
             default:{}
-        }
-        
-        
+        }        
     }
 
     const changeWord = (event) => {
@@ -42,7 +41,6 @@ const Search = ({handleSearch, formChange}) => {
 
     const search = async (event) => {
         event.preventDefault()
-        console.log("searching!")
         handleSearch(query)
     }
     

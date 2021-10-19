@@ -2,18 +2,16 @@ import React from 'react';
 import Loader from 'react-loader-spinner'
 
 
-const LoadingSpinner = ({visibility}) => {
-    
+const LoadingSpinner = ({visibility}) => {    
     return (
-         <div className="text-center w-100 h-100">
+         <div className="loader text-center" 
+         style={visibility ? {"visibility":"visible"}: {"visibility": "hidden"}} >
             <Loader 
                 visible={visibility? "true" : "false"}
                 type="Circles"
                 color="#00BFFF"
-                height={200}
-                width={200}
-                
-              
+                height={100}
+                width={100}
             />
         </div>
     );
