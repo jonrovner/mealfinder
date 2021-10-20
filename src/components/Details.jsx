@@ -1,7 +1,6 @@
 import React from 'react';
 import { Modal, Button, Image } from 'react-bootstrap';
  
-
 const Details = ({details, show, close, addToFavs, favList, addToPantry}) => {    
     const htmlString = details.summary   
     const instructions = details.analyzedInstructions 
@@ -9,58 +8,41 @@ const Details = ({details, show, close, addToFavs, favList, addToPantry}) => {
     :[] 
     const ingredients = details.extendedIngredients
     ?  details.extendedIngredients.map(i => i.name)
-    : []
-    
-    //console.log(instructions)
-    //console.log(ingredients)
-
+    : []    
     const shop = () => {
          addToPantry(ingredients)
     }
-
     return (        
         <Modal          
         show={show} 
         onHide={close}
-        size="lg"
-        >
+        size="lg">
             <Modal.Header closeButton>
-                <Modal.Title>{details.title}</Modal.Title>
+              <Modal.Title>{details.title}</Modal.Title>
             </Modal.Header>
-             <Modal.Body>
-                 <div className="container">
-                     <div className="row">
-                        <div className="col-3">
-                        <Image src={details.image} alt={details.title} fluid rounded />    
-                        </div>                        
-                        <div className="col-9 small" dangerouslySetInnerHTML={{ __html: htmlString }} />
+            <Modal.Body>
+              <div className="container">
+                <div className="row">
+                    <div className="col-3">
+                         <Image src={details.image} alt={details.title} fluid rounded />    
+                    </div>                        
+                    <div className="col-9 small" dangerouslySetInnerHTML={{ __html: htmlString }} />
                     </div>                
                     <div className="row">
                         <h5 className="my-3">Ingredients</h5>
                         <div className="row mx-5">
-                            {details.extendedIngredients ? details.extendedIngredients.map(i => {
-                            return ( <div className="col-4 small">{i.name}</div>)
-                            }) : ""
+                            {details.extendedIngredients && details.extendedIngredients
+                            .map(i => <div className="col-4 small">{i.name}</div>)                            
                             }
                         </div>
-
                     </div>
                     <div className="row mt-3">
                          <h5 className="text-center mb-3">Instructions</h5>
                          <ul className="mx-5 px-5 small">
                              { details !== undefined 
-                             ? instructions.flat().map( i => 
-                                {
-                                    console.log(i)
-                                    return <li>{i.step}</li>} 
-                                )
-                             : <div></div> 
-
-
-                             }
-                        
+                             && instructions.flat().map( i =><li>{i.step}</li>)
+                             }                       
                         </ul>       
-
                     </div>
                  </div>        
         </Modal.Body>
