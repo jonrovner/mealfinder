@@ -1,12 +1,13 @@
 import React, {useState} from 'react' 
 
-const Loginform = ({handleLogin}) => {
+const Loginform = ({handleLogin, errorMessage}) => {
 
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     
     return (
         <div className="container p-3 text-center">
+          <div className="text-red">{(errorMessage !== "") && "wrong username or password" }</div>
              <form className="p-3" onSubmit={(e)=>{
                  e.preventDefault()
                  handleLogin({username, password})}}>

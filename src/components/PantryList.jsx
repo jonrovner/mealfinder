@@ -20,10 +20,10 @@ const Pantrylist = ({list, addToLIst, removeFromList}) => {
             <h3 className="text-center">pantry</h3>
             
             <div className="mt-3">
-                {list.map(ingredient => 
-                <div className="d-flex justify-content-between">
+                {list.map((ingredient, index) => 
+                <div key={index}  className="ingredient d-flex justify-content-between">
                     <p>{ingredient}</p>
-                    <p onClick={()=>remove(ingredient)}>x</p>
+                    <p className="closeX" onClick={()=>remove(ingredient)}>x</p>
                 </div>)}
             </div>
         </div>

@@ -2,13 +2,13 @@ import React from 'react';
 
 const Favs = ({favList, handleDetails, remove, user}) => {
            
-    return (<div className="col-3 container border border-white mt-2">
-            <div className="row pt-2 gy-3">
+    return (<div className="col-3 container border border-white ">
+            <div className="row  gy-3">
                 <h2 className="text-center">favs</h2>
                 {   
                 user !== null  ?
-                    favList.map(item => 
-                    <div key={item.id}
+                    favList.map((item, index )=> 
+                    <div key={index}
                         className="favItem col-12 d-flex flex-column justify-content-between  align-items-center ">
                         <p onClick={() => remove(item)} className="closeButton">X</p>
                         <div className="d-flex flex-column justify-content-between  align-items-center" 

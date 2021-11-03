@@ -1,17 +1,20 @@
 import React from 'react';
 import { Modal, Button, Image } from 'react-bootstrap';
  
-const Details = ({details, show, close, addToFavs, favList, addToPantry}) => {    
+const Details = ({details, show, close, addToFavs, favList, addToPantry, user }) => {    
+  
+    const inList = favList.find(e => e.title === details.title)
     const htmlString = details.summary   
     const instructions = details.analyzedInstructions 
     ? details.analyzedInstructions.map(element => element.steps)
-    :[] 
+    : []
     const ingredients = details.extendedIngredients
-    ?  details.extendedIngredients.map(i => i.name)
+    ? details.extendedIngredients.map(i => i.name)
     : []    
     const shop = () => {
          addToPantry(ingredients)
     }
+
     return (        
         <Modal          
         show={show} 
@@ -51,9 +54,9 @@ const Details = ({details, show, close, addToFavs, favList, addToPantry}) => {
             Close
           </Button>
           <Button variant="primary" onClick={()=>{
-              favList.includes(details) ? shop() : addToFavs(details)
+              inList ? shop() : addToFavs(details)
           }}>
-              {favList.includes(details)? "shop Ingredients" : "add to favs"
+              {inList ? "shop Ingredients" : "add to favs"
 
               }
             

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap';
-import LoginForm from './LoginForm';
+import SignupForm from './SignupForm';
 
-const Loginmodal = ({show, close, handleLogin, errorMessage, user}) => {
+const SignupModal = ({show, close, handleSignup, user}) => {
     return (
         <Modal
         centered
@@ -10,10 +10,10 @@ const Loginmodal = ({show, close, handleLogin, errorMessage, user}) => {
         onHide={close}        
         >
             <Modal.Header className="bg-dark text-white center" closeButton>
-                <Modal.Title >Log In</Modal.Title>
+                <Modal.Title >Sign Up</Modal.Title>
             </Modal.Header>
              <Modal.Body className="bg-dark text-white p-3">
-                <LoginForm handleLogin={handleLogin} errorMessage={errorMessage}/>         
+                <SignupForm handleSignup={handleSignup}/>         
             </Modal.Body>
         
       </Modal>
@@ -22,4 +22,4 @@ const Loginmodal = ({show, close, handleLogin, errorMessage, user}) => {
     );
 }
 
-export default Loginmodal;
+export default SignupModal;

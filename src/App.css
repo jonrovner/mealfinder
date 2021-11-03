@@ -93,3 +93,41 @@
 .favItem:hover .closeButton {
   display: block;
 }
+.imageContainer{
+  max-height: 50%;
+  overflow: hidden;
+}
+.card{
+  cursor: pointer;
+}
+.cardImage{
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  transition: all .75s ease-in-out;
+}
+.card:hover .cardImage {
+
+ transform: scale(1.2)
+
+}
+.ingredient{
+  cursor: pointer;
+}
+.closeX{
+  transition: all .1s ease-in-out;
+  opacity: 0;
+}
+.ingredient:hover .closeX{
+  opacity: 1;
+
+}
+
+.inputFeedback{
+  font-size: small;
+  color:red;
+}
+
+.red{
+  color:red
+}
