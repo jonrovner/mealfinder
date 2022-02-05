@@ -17,7 +17,8 @@ const loginRouter = require('./controllers/login')
 const signupRouter = require('./controllers/signup')
 const verifyRouter = require('./controllers/verify')
 
-const uri = "mongodb+srv://jonrov:"+process.env.MONGO_PASS+"@cluster0.od8ue.mongodb.net/database?retryWrites=true&w=majority";
+const uri = "mongodb+srv://jonrov:" + process.env.MONGO_PASS + "@cluster0.od8ue.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+
 
 mongoose.connect(uri).then(result => {
     logger.info('connected to MongoDB')

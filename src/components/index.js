@@ -13,4 +13,17 @@ import LoginForm from "./LoginForm";
 import SignupModal from "./SignupModal"
 import SignupButton from "./SignupButton"
 
-export {Details, Dish, Favs, Footer, LoadingSpinner, NavBar, PantryList, Search, Results, LoginButton, LoginModal, LoginForm, SignupModal, SignupButton}
+export {Details, 
+        Dish, 
+        Favs, 
+        Footer, 
+        LoadingSpinner, 
+        NavBar, 
+        PantryList, 
+        Search, 
+        Results, 
+        LoginButton, 
+        LoginModal, 
+        LoginForm, 
+        SignupModal, 
+        SignupButton}

@@ -3,6 +3,8 @@ import { Modal } from 'react-bootstrap';
 import LoginForm from './LoginForm';
 
 const Loginmodal = ({show, close, handleLogin, errorMessage, user}) => {
+      
+        
     return (
         <Modal
         centered

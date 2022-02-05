@@ -1,0 +1,27 @@
+GET http://localhost:3001/api/users
+
+###
+
+POST http://localhost:3001/api/users HTTP/1.1
+content-Type: application/json
+
+{
+    "dishes": [],
+    "username": "jon",
+    "name": "jon",
+    "password": "jota"
+}
+
+###
+
+POST http://localhost:3001/api/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "jon",
+    "password": "jota"
+}
+
+###
+
+GET http://localhost:3001/api/deleteallusers
