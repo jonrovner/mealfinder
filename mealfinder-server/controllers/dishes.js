@@ -9,6 +9,7 @@ const User = require('../models/users')
 
 dishRouter.get('/random', async (req, res) => {
     try {
+        console.log("req query is ", req.query)
         const queryString = `https://api.spoonacular.com/recipes/random?number=${req.query.number}&tags=${req.query.tags}&apiKey=${process.env.APIKEY}`
         const data = await fetch(queryString)        
         const results = await data.json()         
